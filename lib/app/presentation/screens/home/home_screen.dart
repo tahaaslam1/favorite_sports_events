@@ -1,4 +1,4 @@
-import 'package:favorite_sports_events/constants.dart';
+import 'package:favorite_sports_events/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

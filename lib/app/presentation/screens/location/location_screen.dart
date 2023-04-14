@@ -1,8 +1,8 @@
-import 'package:favorite_sports_events/presentation/widgets/country_selection_button.dart';
+import 'package:favorite_sports_events/app/presentation/widgets/country_selection_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../constants.dart';
+import '../../../../core/constants.dart';
 
 class LocationScreen extends StatelessWidget {
   const LocationScreen({super.key});

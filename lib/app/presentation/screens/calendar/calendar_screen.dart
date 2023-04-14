@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../../constants.dart';
+import '../../../../core/constants.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../constants.dart';
+import '../../../../core/constants.dart';
 
 class SingleMatchScreen extends StatelessWidget {
   const SingleMatchScreen({super.key});
