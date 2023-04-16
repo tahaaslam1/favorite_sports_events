@@ -34,7 +34,9 @@ class LocationScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 40.0.h),
-              const CountrySelectionButton()
+              CountrySelectionButton(
+                onTap: () {},
+              )
             ],
           ),
         ),

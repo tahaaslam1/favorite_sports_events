@@ -2,7 +2,6 @@ import 'package:favorite_sports_events/app/presentation/widgets/category_button.
 import 'package:favorite_sports_events/app/presentation/widgets/country_selection_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/constants.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -47,7 +46,9 @@ class SettingsScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 12.h),
-              const CountrySelectionButton(),
+              CountrySelectionButton(
+                onTap: () {},
+              ),
               SizedBox(height: 27.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -122,7 +123,6 @@ class SettingsScreen extends StatelessWidget {
                     thickness: 1.0.h,
                     height: 1.0.h,
                   ),
-                  
                 ],
               ),
             ],
