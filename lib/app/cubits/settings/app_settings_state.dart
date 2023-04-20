@@ -2,18 +2,23 @@ part of 'app_settings_cubit.dart';
 
 enum CountryStatus { initial, loaded, error }
 
+enum AppSettingsStatus { initial, loaded, noSettings, error }
+
 class AppSettingsState extends Equatable {
   final Country selectedCountry;
 
   final CountryStatus countryStatus;
 
-  final List<Category> selectedCategories;
+  List<Category> selectedCategories;
 
   final List<Event> favoriteEvents;
 
   final List<Country> countries;
 
-  const AppSettingsState({
+  final AppSettingsStatus appSettingsStatus;
+
+  AppSettingsState({
+    this.appSettingsStatus = AppSettingsStatus.initial,
     this.countries = const <Country>[],
     this.countryStatus = CountryStatus.initial,
     this.selectedCountry = Country.empty,
@@ -22,6 +27,7 @@ class AppSettingsState extends Equatable {
   });
 
   AppSettingsState copyWith({
+    AppSettingsStatus? appSettingsStatus,
     CountryStatus? countryStatus,
     Country? selectedCountry,
     List<Category>? selectedCategories,
@@ -29,6 +35,7 @@ class AppSettingsState extends Equatable {
     List<Country>? countries,
   }) {
     return AppSettingsState(
+      appSettingsStatus: appSettingsStatus ?? this.appSettingsStatus,
       countryStatus: countryStatus ?? this.countryStatus,
       selectedCountry: selectedCountry ?? this.selectedCountry,
       selectedCategories: selectedCategories ?? this.selectedCategories,
@@ -38,7 +45,5 @@ class AppSettingsState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [selectedCountry, selectedCategories, favoriteEvents, countryStatus];
-
-  // const Country.empty = Country(countryId: 0, countryName: 'Select Country');
+  List<Object?> get props => [selectedCountry, selectedCategories, favoriteEvents, countryStatus, countries, appSettingsStatus];
 }

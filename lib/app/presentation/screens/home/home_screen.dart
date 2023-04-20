@@ -1,9 +1,36 @@
+import 'package:favorite_sports_events/app/cubits/settings/app_settings_cubit.dart';
+import 'package:favorite_sports_events/app/repositories/events_repository/events_repo.dart';
 import 'package:favorite_sports_events/core/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HomeScreen extends StatelessWidget {
+import '../../../../core/logger.dart';
+import '../../../blocs/bloc/home_bloc.dart';
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late HomeBloc _homeBloc;
+  @override
+  void initState() {
+    super.initState();
+    _homeBloc = BlocProvider.of<HomeBloc>(context);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _homeBloc.add(FetchEventsList(
+      selectedCategories: context.watch<AppSettingsCubit>().state.selectedCategories,
+      selectedCountry: context.watch<AppSettingsCubit>().state.selectedCountry,
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {

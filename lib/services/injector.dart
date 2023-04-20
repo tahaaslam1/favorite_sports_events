@@ -1,3 +1,5 @@
+import 'package:favorite_sports_events/app/repositories/events_repository/events_repo.dart';
+import 'package:favorite_sports_events/app/repositories/events_repository/events_repo_impl.dart';
 import 'package:favorite_sports_events/services/http_service.dart';
 import 'package:favorite_sports_events/services/local_storage_service.dart';
 import 'package:favorite_sports_events/services/snackbar_service.dart';
@@ -5,9 +7,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../app/blocs/bloc/home_bloc.dart';
 import '../app/cubits/settings/app_settings_cubit.dart';
-import '../app/repositories/country_repository/country_repository.dart';
-import '../app/repositories/country_repository/country_repository_impl.dart';
+import '../app/repositories/app_settings_repository/app_settings_repository.dart';
+import '../app/repositories/app_settings_repository/app_settings_repository_impl.dart';
 
 class Injector extends StatelessWidget {
   final Widget child;
@@ -35,8 +38,14 @@ class _GlobalRepositoryInjector extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<CountryRepository>(
-          create: (context) => CountryRepositoryImpl(
+        RepositoryProvider<AppSettingsRepository>(
+          create: (context) => AppSettingsRepositoryImpl(
+            httpService: context.read<HttpService>(),
+            localStorageService: context.read<LocalStorageService>(),
+          ),
+        ),
+        RepositoryProvider<EventsRepo>(
+          create: (context) => EventsRepoImpl(
             httpService: context.read<HttpService>(),
             localStorageService: context.read<LocalStorageService>(),
           ),
@@ -57,7 +66,10 @@ class _GlobalBlocInjector extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AppSettingsCubit>(
-          create: (context) => AppSettingsCubit(countryRepository: context.read<CountryRepository>()),
+          create: (context) => AppSettingsCubit(countryRepository: context.read<AppSettingsRepository>()),
+        ),
+        BlocProvider<HomeBloc>(
+          create: (context) => HomeBloc(eventRepo: context.read<EventsRepo>()),
         ),
       ],
       child: child,

@@ -46,8 +46,8 @@ class SettingsScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 12.h),
-              CountrySelectionButton(
-                onTap: () {},
+              const CountrySelectionButton(
+                countries: [],
               ),
               SizedBox(height: 27.h),
               Row(
@@ -72,12 +72,12 @@ class SettingsScreen extends StatelessWidget {
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
-                      CategoryButton(categoryName: 'categoryName', categoryIcon: 'assets/images/football.png', onTap: () {}),
-                      SizedBox(width: 14.w),
-                      CategoryButton(categoryName: 'categoryName', categoryIcon: 'assets/images/football.png', onTap: () {}),
-                      CategoryButton(categoryName: 'categoryName', categoryIcon: 'assets/images/football.png', onTap: () {}),
-                      CategoryButton(categoryName: 'categoryName', categoryIcon: 'assets/images/football.png', onTap: () {}),
-                      CategoryButton(categoryName: 'categoryName', categoryIcon: 'assets/images/football.png', onTap: () {}),
+                      // CategoryButton(categoryName: 'categoryName', categoryIcon: 'assets/images/football.png', onTap: () {}),
+                      // SizedBox(width: 14.w),
+                      // CategoryButton(categoryName: 'categoryName', categoryIcon: 'assets/images/football.png', onTap: () {}),
+                      // CategoryButton(categoryName: 'categoryName', categoryIcon: 'assets/images/football.png', onTap: () {}),
+                      // CategoryButton(categoryName: 'categoryName', categoryIcon: 'assets/images/football.png', onTap: () {}),
+                      // CategoryButton(categoryName: 'categoryName', categoryIcon: 'assets/images/football.png', onTap: () {}),
                     ],
                   ),
                 ),

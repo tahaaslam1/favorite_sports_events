@@ -1,3 +1,4 @@
+import 'package:favorite_sports_events/app/cubits/settings/app_settings_cubit.dart';
 import 'package:flutter/material.dart';
 
 import '../app/presentation/screens/calendar/calendar_screen.dart';
@@ -59,16 +60,16 @@ class AppNavigator {
 
   static NavigatorState? get state => navigatorKey.currentState;
 
-  // static navigate(AuthenticationStatus authenticationStatus) {
-  //   switch (authenticationStatus) {
-  //     case AuthenticationStatus.authenticated:
-  //       replaceWith(Routes.home);
-  //       break;
-  //     case AuthenticationStatus.unauthenticated:
-  //       replaceWith(Routes.category);
-  //       break;
-  //     default:
-  //       replaceWith(Routes.location);
-  //   }
-  // }
+  static navigate(AppSettingsStatus appSettingsStatus) {
+    switch (appSettingsStatus) {
+      case AppSettingsStatus.loaded:
+        replaceWith(Routes.home);
+        break;
+      // case AppSettingsStatus.categorySelected:
+      //   replaceWith(Routes.home);
+      //   break;
+      default:
+        replaceWith(Routes.location);
+    }
+  }
 }

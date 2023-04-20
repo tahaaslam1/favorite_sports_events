@@ -1,34 +1,50 @@
 import 'package:equatable/equatable.dart';
 import 'package:favorite_sports_events/app/models/category.dart';
 
+import '../../core/logger.dart';
+
 class Event extends Equatable {
-  final String eventId;
+  final int eventId;
   final DateTime eventStartTime;
-  final String oop1;
-  final String oop2;
+  final String opp1;
+  final String opp2;
   final Category eventCategory;
-  final bool isFav;
 
-  const Event({required this.eventId, required this.eventStartTime, required this.oop1, required this.oop2, required this.eventCategory, required this.isFav});
+  const Event({
+    required this.eventId,
+    required this.eventStartTime,
+    required this.opp1,
+    required this.opp2,
+    required this.eventCategory,
+  });
 
-  @override
-  List<Object?> get props => [eventId, eventStartTime, oop1, oop2, eventCategory, isFav];
+  factory Event.fromJson(Map<String, dynamic> map, Category category) {
+    logger.w(map['game_start']);
+    return Event(
+      eventId: map['game_id'],
+      eventStartTime: DateTime.fromMillisecondsSinceEpoch(map['game_start'] * 1000),
+      opp1: map['opp_1_name'],
+      opp2: map['opp_2_name'],
+      eventCategory: category,
+    );
+  }
 
   Event copyWith({
-    String? eventId,
+    int? eventId,
     DateTime? eventStartTime,
-    String? oop1,
-    String? oop2,
+    String? opp1,
+    String? opp2,
     Category? eventCategory,
-    bool? isFav,
   }) {
     return Event(
       eventId: eventId ?? this.eventId,
       eventStartTime: eventStartTime ?? this.eventStartTime,
-      oop1: oop1 ?? this.oop1,
-      oop2: oop2 ?? this.oop2,
+      opp1: opp1 ?? this.opp1,
+      opp2: opp2 ?? this.opp2,
       eventCategory: eventCategory ?? this.eventCategory,
-      isFav: isFav ?? this.isFav,
     );
   }
+
+  @override
+  List<Object?> get props => [eventId, eventStartTime, opp1, opp2, eventCategory];
 }

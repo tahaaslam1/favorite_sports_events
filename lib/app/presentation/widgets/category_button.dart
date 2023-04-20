@@ -1,28 +1,40 @@
+import 'package:favorite_sports_events/app/cubits/settings/app_settings_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants.dart';
+import '../../models/category.dart';
 
 class CategoryButton extends StatelessWidget {
-  final String categoryName;
-  final String categoryIcon;
+  final Category category;
   final Function()? onTap;
+  // final String categoryName;
+  // final String categoryIcon;
+  // final Function()? onTap;
 
   const CategoryButton({
     super.key,
-    required this.categoryName,
-    required this.categoryIcon,
+    // required this.categoryName,
+    // required this.categoryIcon,
+    // required this.onTap,
+
+    required this.category,
     required this.onTap,
   });
 
+  final bool isSelected = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: //   widget.onTap,
+          () {
+        context.read<AppSettingsCubit>().updateSelectedCategories(category);
+      },
       child: Container(
         height: 41.0.h,
         decoration: BoxDecoration(
-          color: kAppBarBackgroundColor,
+          color: context.watch<AppSettingsCubit>().state.selectedCategories.contains(category) ? kYellowColor : kAppBarBackgroundColor, // isCategorySelected(widget.category) ? kYellowColor : kAppBarBackgroundColor,
           borderRadius: BorderRadius.circular(6.r),
           border: Border.all(color: const Color(0xFFFFFFFF)),
         ),
@@ -32,13 +44,13 @@ class CategoryButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Image.asset(
-                categoryIcon,
+                category.categoryIcon,
                 height: 20.h,
                 width: 20.w,
               ),
               SizedBox(width: 14.0.w),
               Text(
-                categoryName,
+                category.categoryName,
                 style: TextStyle(
                   color: const Color(0xFFFFFFFF),
                   fontSize: 16.0.sp,
