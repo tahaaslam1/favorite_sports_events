@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:favorite_sports_events/app/models/category.dart';
 import 'package:favorite_sports_events/app/models/country.dart';
 import 'package:favorite_sports_events/app/models/event.dart';
+import 'package:favorite_sports_events/app/repositories/events_repository/events_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/failure.dart';
@@ -12,28 +13,44 @@ part 'app_settings_state.dart';
 
 class AppSettingsCubit extends Cubit<AppSettingsState> {
   final AppSettingsRepository _appSettingsRepository;
+  final EventsRepo _eventsRepo;
 
-  AppSettingsCubit({required AppSettingsRepository countryRepository})
-      : _appSettingsRepository = countryRepository,
+  AppSettingsCubit({required AppSettingsRepository appSettingsRepository, required EventsRepo eventsRepo})
+      : _appSettingsRepository = appSettingsRepository,
+        _eventsRepo = eventsRepo,
         super(AppSettingsState());
 
+  Future<void> getFavEvents() async {
+    // for (var i in _eventsRepo.favEvents) {
+    //   logger.d(i);
+    // }
+    logger.d(_eventsRepo.favEvents.length);
+    emit(state.copyWith(favoriteEvents: _eventsRepo.favEvents, appSettingsStatus: AppSettingsStatus.loaded));
+  }
+
   Future<void> loadUserSettings() async {
-    await loadCountries();
-    // await loadCategories();
-    await _appSettingsRepository.getUserSavedCategories();
+    try {
+      await loadCountries();
 
-    Country userCountry = await _appSettingsRepository.getUserSavedCountry();
+      await _appSettingsRepository.getUserSavedCategories();
 
-    if (userCountry == Country.empty) {
-      emit(state.copyWith(appSettingsStatus: AppSettingsStatus.noSettings));
-    } else if (userCountry != Country.empty) {
-      emit(state.copyWith(selectedCountry: userCountry));
-    }
+      // await _eventsRepo.getAllFavEvents();
 
-    List<Category> userCategories = _appSettingsRepository.selectedCategories;
+      Country userCountry = await _appSettingsRepository.getUserSavedCountry();
 
-    if (userCategories.isNotEmpty) {
-      emit(state.copyWith(selectedCategories: userCategories));
+      if (userCountry == Country.empty) {
+        emit(state.copyWith(appSettingsStatus: AppSettingsStatus.noSettings));
+      } else if (userCountry != Country.empty) {
+        emit(state.copyWith(selectedCountry: userCountry));
+      }
+
+      List<Category> userCategories = _appSettingsRepository.selectedCategories;
+
+      if (userCategories.isNotEmpty) {
+        emit(state.copyWith(selectedCategories: userCategories));
+      }
+    } catch (e) {
+      emit(state.copyWith(appSettingsStatus: AppSettingsStatus.error));
     }
   }
 
@@ -55,15 +72,6 @@ class AppSettingsCubit extends Cubit<AppSettingsState> {
     await _appSettingsRepository.updateCategories(category);
 
     emit(state.copyWith(selectedCategories: _appSettingsRepository.selectedCategories));
-    // if (_appSettingsRepository.selectedCategories.contains(category)) {
-    //   _appSettingsRepository.selectedCategories.remove(category);
-    //   emit(state.copyWith(selectedCategories: _appSettingsRepository.selectedCategories));
-    //   logger.d(state);
-    // } else {
-    //   _appSettingsRepository.selectedCategories.add(category);
-    //   emit(state.copyWith(selectedCategories: _appSettingsRepository.selectedCategories));
-    //   logger.w(state);
-    // }
   }
 
   bool isCategorySelected(Category category) {

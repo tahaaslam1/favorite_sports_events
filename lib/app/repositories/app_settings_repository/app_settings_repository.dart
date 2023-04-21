@@ -15,5 +15,6 @@ abstract class AppSettingsRepository {
   Future<Country> getUserSavedCountry();
 
   Future<void> getUserSavedCategories();
+
   Future<void> updateCategories(Category category);
 }

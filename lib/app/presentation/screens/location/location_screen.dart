@@ -35,14 +35,14 @@ class LocationScreen extends StatelessWidget {
             builder: (context, state) {
               if (state.countryStatus == CountryStatus.initial) {
                 return const CircularProgressIndicator();
-              } else {
+              } else if (state.countryStatus == CountryStatus.loaded) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Your Country:',
                       style: TextStyle(
-                        fontSize: 17.sp,
+                        fontSize: 17,
                         color: kPrimaryTextColor,
                         fontWeight: FontWeight.w600,
                         fontStyle: FontStyle.normal,
@@ -54,6 +54,8 @@ class LocationScreen extends StatelessWidget {
                     )
                   ],
                 );
+              } else {
+                return const Center(child: Text('Something went wrong', style: TextStyle(color: Colors.white)));
               }
             },
           ),

@@ -1,6 +1,7 @@
 import 'package:favorite_sports_events/app/cubits/settings/app_settings_cubit.dart';
 import 'package:flutter/material.dart';
 
+import '../app/models/event.dart';
 import '../app/presentation/screens/calendar/calendar_screen.dart';
 import '../app/presentation/screens/category/category_screen.dart';
 import '../app/presentation/screens/home/home_screen.dart';
@@ -46,7 +47,15 @@ class AppNavigator {
       case _Paths.settings:
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
       case _Paths.singleMatch:
-        return MaterialPageRoute(builder: (_) => const SingleMatchScreen());
+        {
+          final eventId = settings.arguments as int;
+
+          return MaterialPageRoute(
+            builder: (_) => SingleMatchScreen(
+              eventId: eventId,
+            ),
+          );
+        }
       default:
         return MaterialPageRoute(builder: (_) => const LocationScreen());
     }

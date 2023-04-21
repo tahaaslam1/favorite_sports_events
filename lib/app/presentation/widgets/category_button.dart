@@ -36,7 +36,7 @@ class CategoryButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: context.watch<AppSettingsCubit>().state.selectedCategories.contains(category) ? kYellowColor : kAppBarBackgroundColor, // isCategorySelected(widget.category) ? kYellowColor : kAppBarBackgroundColor,
           borderRadius: BorderRadius.circular(6.r),
-          border: Border.all(color: const Color(0xFFFFFFFF)),
+          border: context.watch<AppSettingsCubit>().state.selectedCategories.contains(category) ? Border.all(color: Colors.transparent) : Border.all(color: const Color(0xFFFFFFFF)),
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 12.0.w),
@@ -51,9 +51,9 @@ class CategoryButton extends StatelessWidget {
               SizedBox(width: 14.0.w),
               Text(
                 category.categoryName,
-                style: TextStyle(
-                  color: const Color(0xFFFFFFFF),
-                  fontSize: 16.0.sp,
+                style: const TextStyle(
+                  color: Color(0xFFFFFFFF),
+                  fontSize: 16.0,
                   fontWeight: FontWeight.w500,
                 ),
               )

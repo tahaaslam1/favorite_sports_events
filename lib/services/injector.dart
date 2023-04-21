@@ -7,8 +7,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../app/blocs/bloc/home_bloc.dart';
+import '../app/blocs/home/home_bloc.dart';
 import '../app/cubits/settings/app_settings_cubit.dart';
+import '../app/cubits/single_match/single_match_cubit.dart';
 import '../app/repositories/app_settings_repository/app_settings_repository.dart';
 import '../app/repositories/app_settings_repository/app_settings_repository_impl.dart';
 
@@ -66,10 +67,13 @@ class _GlobalBlocInjector extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AppSettingsCubit>(
-          create: (context) => AppSettingsCubit(countryRepository: context.read<AppSettingsRepository>()),
+          create: (context) => AppSettingsCubit(appSettingsRepository: context.read<AppSettingsRepository>(), eventsRepo: context.read<EventsRepo>()),
         ),
         BlocProvider<HomeBloc>(
           create: (context) => HomeBloc(eventRepo: context.read<EventsRepo>()),
+        ),
+        BlocProvider<SingleMatchCubit>(
+          create: (context) => SingleMatchCubit(eventRepo: context.read<EventsRepo>()),
         ),
       ],
       child: child,

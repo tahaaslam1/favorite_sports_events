@@ -1,8 +1,11 @@
+import 'package:favorite_sports_events/core/app_navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../core/constants.dart';
+import '../../../blocs/home/home_bloc.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -11,9 +14,23 @@ class CalendarScreen extends StatefulWidget {
   State<CalendarScreen> createState() => _CalendarScreenState();
 }
 
-DateTime _selectedDay = DateTime.utc(2023, 4, 12);
-
 class _CalendarScreenState extends State<CalendarScreen> {
+  late DateTime _selectedDay;
+  late DateTime _firstDay;
+
+  late DateTime _lastDay;
+
+  @override
+  initState() {
+    super.initState();
+    _selectedDay = context.read<HomeBloc>().state.events.first.eventStartTime;
+    _lastDay = context.read<HomeBloc>().state.events.last.eventStartTime;
+
+    _firstDay = context.read<HomeBloc>().state.firstDay!;
+
+    // _selectedDay = _firstDay;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,10 +39,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
         appBar: AppBar(
           toolbarHeight: 81.h,
           backgroundColor: kFloatingActionButtonActiveColor,
-          title: Text('Calendar', style: TextStyle(color: Colors.white, fontSize: 18.0.sp, fontWeight: FontWeight.w600)),
+          title: const Text('Calendar', style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w600)),
           centerTitle: true,
           leading: GestureDetector(
-            onTap: () {},
+            onTap: () {
+              AppNavigator.pop();
+            },
             child: Padding(
               padding: EdgeInsets.only(left: 24.0.w),
               child: Icon(Icons.arrow_circle_left_outlined, size: 28.h),
@@ -34,8 +53,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
         ),
         body: TableCalendar(
           focusedDay: _selectedDay,
-          firstDay: DateTime.utc(2010, 10, 16),
-          lastDay: DateTime.utc(2030, 3, 14),
+          firstDay: _firstDay,
+          lastDay: _lastDay,
           // selectedDayPredicate: ,
           selectedDayPredicate: (day) {
             return isSameDay(_selectedDay, day);
@@ -44,6 +63,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
             setState(() {
               _selectedDay = selectedDay;
             });
+
+            context.read<HomeBloc>().add(FilterEventsByDate(dateSelected: selectedDay));
           },
           calendarStyle: const CalendarStyle(
             isTodayHighlighted: false,
@@ -65,8 +86,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
             decoration: const BoxDecoration(
               color: kCalendarHeaderColor,
             ),
-            titleTextStyle: TextStyle(
-              fontSize: 16.sp,
+            titleTextStyle: const TextStyle(
+              fontSize: 16,
               fontWeight: FontWeight.w600,
               fontFamily: 'Open Sans',
               fontStyle: FontStyle.normal,

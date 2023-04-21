@@ -1,5 +1,4 @@
 import 'package:favorite_sports_events/core/app_navigator.dart';
-import 'package:favorite_sports_events/services/injector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

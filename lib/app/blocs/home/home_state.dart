@@ -7,10 +7,13 @@ class HomeState extends Equatable {
 
   final List<Event> events;
 
+  final DateTime? firstDay;
+
   // final DateTime? dateSelected;
 
   const HomeState({
     // this.dateSelected,
+    this.firstDay,
     this.homeStatus = HomeStatus.initial,
     this.events = const <Event>[],
   });
@@ -19,8 +22,10 @@ class HomeState extends Equatable {
     HomeStatus? homeStatus,
     List<Event>? events,
     DateTime? dateSelected,
+    DateTime? firstDay,
   }) {
     return HomeState(
+      firstDay: firstDay ?? this.firstDay,
       homeStatus: homeStatus ?? this.homeStatus,
       events: events ?? this.events,
       // dateSelected: dateSelected ?? this.dateSelected,

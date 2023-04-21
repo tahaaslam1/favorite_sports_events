@@ -30,9 +30,11 @@ class AppSettingsRepositoryImpl extends AppSettingsRepository {
       final Response response = await _httpService.request<Map<String, dynamic>>(RequestMethod.get, Endpoints.countriesUrl, headers: {'Package': Secrets.apiSecretKey});
 
       List<Country> countries = response.data['body'].map<Country>((e) => Country.fromJson(e)).toList();
+
       _countries.addAll(countries.toSet().toList());
       return countries.toSet().toList();
     } catch (e) {
+      logger.e('In get countries');
       logger.e(e);
       throw Failure(message: kGenericErrorMessage);
     }
@@ -118,7 +120,9 @@ class AppSettingsRepositoryImpl extends AppSettingsRepository {
       List<String> userCategories = await _localStorageService.getStringList('categories');
       _selectedCategories.clear();
       _selectedCategories.addAll(userCategories);
-    } catch (_) {
+    } catch (e) {
+      logger.e('In get user saved categories');
+      logger.e(e);
       throw Failure(message: kGenericErrorMessage);
     }
   }

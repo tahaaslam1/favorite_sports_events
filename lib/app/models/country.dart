@@ -8,8 +8,15 @@ class Country extends Equatable {
 
   factory Country.fromJson(Map<String, dynamic> map) {
     return Country(
-      countryId: map['id'],
-      countryName: map['name'],
+      countryId: map['id'] ?? -1,
+      countryName: map['name'] ?? '',
+    );
+  }
+
+  factory Country.fromJson2(int id, String name) {
+    return Country(
+      countryId: id,
+      countryName: name,
     );
   }
 

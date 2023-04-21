@@ -29,14 +29,14 @@ class CountrySelectionButton extends StatelessWidget {
         // style: const TextStyle(color: Colors.black, fontSize: 16.0),
         value: BlocProvider.of<AppSettingsCubit>(context).state.selectedCountry == Country.empty ? null : BlocProvider.of<AppSettingsCubit>(context).state.selectedCountry,
 
-        hint: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Text('Select your Country', style: TextStyle(fontSize: 16.sp, color: const Color(0xFF8C8C8C))),
+        hint: const Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: Text('Select your Country', style: TextStyle(fontSize: 16, color: Color(0xFF8C8C8C))),
         ),
         items: countries.map<DropdownMenuItem<Country>>((Country country) {
           return DropdownMenuItem<Country>(
             value: country,
-            child: Text(country.countryName, style: TextStyle(color: const Color(0xFF202020), fontSize: 16.0.sp, fontWeight: FontWeight.w600)),
+            child: Text(country.countryName, style: const TextStyle(color: Color(0xFF202020), fontSize: 16.0, fontWeight: FontWeight.w600)),
           );
         }).toList(),
         onChanged: (value) {

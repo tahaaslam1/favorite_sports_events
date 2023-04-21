@@ -6,9 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants.dart';
-import '../../../../core/logger.dart';
 import '../../../models/category.dart';
-import 'data/categories_data.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({super.key});
@@ -43,7 +41,7 @@ class CategoryScreen extends StatelessWidget {
                   label: Text(
                     'START',
                     style: TextStyle(
-                      fontSize: 17.0.sp,
+                      fontSize: 17.0,
                       fontWeight: FontWeight.w700,
                       color: context.watch<AppSettingsCubit>().state.selectedCategories.isEmpty ? const Color(0xFF838383) : Colors.white,
                     ),
@@ -69,15 +67,14 @@ class CategoryScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'Favorite Categories',
                 style: TextStyle(
-                  fontSize: 22.0.sp,
-                  color: const Color(0xFFFFFFFF),
+                  fontSize: 22.0,
+                  color: Color(0xFFFFFFFF),
                 ),
               ),
               SizedBox(height: 48.0.h),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

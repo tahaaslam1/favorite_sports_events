@@ -22,6 +22,8 @@ class Category extends Equatable {
     );
   }
 
+  static const empty = Category(categoryId: 0, categoryName: '-', categoryIcon: '-');
+
   @override
   List<Object?> get props => [categoryIcon, categoryId, categoryName];
 }

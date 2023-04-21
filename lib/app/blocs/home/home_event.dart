@@ -17,3 +17,15 @@ class FetchEventsList extends HomeEvent {
     required this.selectedCategories,
   });
 }
+
+class FilterEventsByDate extends HomeEvent {
+  final DateTime dateSelected;
+
+  const FilterEventsByDate({required this.dateSelected});
+}
+
+// class AddEventToFavorite extends HomeEvent {
+//   final Event event;
+
+//   const AddEventToFavorite({required this.event});
+// }
